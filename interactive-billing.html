@@ -1,0 +1,121 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 40px;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            padding: 30px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+        }
+        label, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="number"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Interactive Billing System</h2>
+        <label>Item Name</label>
+        <input type="text" id="item" placeholder="Enter item name">
+
+        <label>Quantity</label>
+        <input type="number" id="quantity" placeholder="Enter quantity">
+
+        <label>Price per Item</label>
+        <input type="number" id="price" placeholder="Enter price">
+
+        <button onclick=addItem()>Add to Bill</button>
+
+        <table id="billTable">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <h3 id="totalAmount">Total: ₹0</h3>
+    </div>
+
+    <script>
+        let total = 0;
+
+        function addItem() {
+            const item = document.getElementById('item').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const price = parseFloat(document.getElementById('price').value);
+
+            if (!item || !quantity || !price) {
+                alert('Please fill all fields');
+                return;
+            }
+
+            const itemTotal = quantity * price;
+            total += itemTotal;
+
+            const table = document.getElementById('billTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            newRow.innerHTML = `
+                <td>${item}</td>
+                <td>${quantity}</td>
+                <td>₹${price.toFixed(2)}</td>
+                <td>₹${itemTotal.toFixed(2)}</td>
+            `;
+
+            document.getElementById('totalAmount').innerText = 'Total: ₹' + total.toFixed(2);
+
+            // Clear inputs
+            document.getElementById('item').value = '';
+            document.getElementById('quantity').value = '';
+            document.getElementById('price').value = '';
+        }
+    </script>
+</body>
+</html>
